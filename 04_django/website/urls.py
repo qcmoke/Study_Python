@@ -1,0 +1,56 @@
+"""website URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.conf.urls import url
+from django.contrib import admin
+from django.shortcuts import render
+from django.urls import path
+
+from website import views
+
+
+def login(request):
+    return render(request, "login.html")
+
+
+def check(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        if username == "zhangsan" and password == '123456':
+            return render(
+                request,
+                "index.html",
+                {
+                    "username": username,
+                    "books": [
+                        {'id': 1, "bookName": "水浒传", "price": 89.99},
+                        {'id': 2, "bookName": "西游记", "price": 79.89},
+                        {'id': 3, "bookName": "红楼梦", "price": 83.65}
+                    ]
+                }
+            )
+
+    return render(request, "login.html")
+    # return redirect("https://www.qcmoke.site/")
+
+
+# url()和path()都可以
+urlpatterns = [
+    url(r'^login', login),
+    path('check/', check),
+    path('', views.index, name='index'),
+    path('admin/', admin.site.urls),
+]
