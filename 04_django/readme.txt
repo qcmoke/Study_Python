@@ -5,7 +5,7 @@
 项目目录
 website   项目的容器
 ├── db.sqlite3
-├── manage.py 管理Django项目执行的文    (一个实用的命令行工具，可让你以各种方式与该 Django 项目进行交互。)。
+├── manage.py 管理Django项目执行的文件    (一个实用的命令行工具，可让你以各种方式与该 Django 项目进行交互。)。
 ├── readme.txt
 ├── templates 模板引擎
 └── website

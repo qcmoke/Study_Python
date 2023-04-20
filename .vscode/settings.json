@@ -1,0 +1,5 @@
+{
+  // 编辑自动保存
+  // "files.autoSave": "afterDelay",
+  // "python.formatting.autopep8Args": ["--max-line-length=200"]
+}
