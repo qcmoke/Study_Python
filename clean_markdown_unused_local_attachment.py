@@ -161,9 +161,9 @@ def buttonHandle(type, att_dirpath_var=None, is_clean_all_att_var=None):
     if type == "clean":
         # 获取起始处理目录的路径
         start_dirpath = fd.askdirectory()
-        att_dirpath = att_dirpath_var.get()
+        select_att_dirpath = att_dirpath_var.get()
         is_clean_all_att = is_clean_all_att_var.get()
-        dict = clean_att_file(start_dirpath, is_clean_all_att, att_dirpath)
+        dict = clean_att_file(start_dirpath, is_clean_all_att, select_att_dirpath)
         show_tip(dict)
     elif type == "restore":
         start_dirpath = fd.askdirectory()
@@ -193,34 +193,31 @@ if __name__ == '__main__':
 
     entry1_frame = tk.Frame(frame)
     entry1_frame.pack(pady=5)
-    att_dir_path_button_title_label = tk.Label(entry1_frame, text="设置附件目录", font=("Microsoft YaHei", 9))
-    att_dir_path_button_title_label.pack(side=tk.LEFT, padx=10)
-    entry1 = tk.Entry(entry1_frame, textvariable=att_dirpath_var, width=30, font=("Microsoft YaHei", 9))
-    entry1.pack(side=tk.LEFT)
-    select_att_dirpath_button = tk.Button(entry1_frame, text="选择", font=("Microsoft YaHei", 9), command=lambda: buttonHandle("select_att_dirpath", att_dirpath_var=att_dirpath_var))
-    select_att_dirpath_button.pack(side=tk.LEFT)
-    reset_att_dir_path_button = tk.Button(entry1_frame, text="重置", font=("Microsoft YaHei", 9), command=lambda: buttonHandle("reset", att_dirpath_var=att_dirpath_var))
-    reset_att_dir_path_button.pack(side=tk.LEFT, padx=5)
-    att_dir_path_button_tip_label_text = f'附件目录说明：\n\n（1）对于绝对路径：可通过“选择”按钮选择附件目录。\n（2）对于相对路径：可设置："./"、"{default_att_dirpath}"、"{default_att_dirpath}/xxx/xxx（如：{default_att_dirpath}/assets）" 等相对路径。（其中“./”表示markdown文件所在目录；“{default_att_dirpath}” 表示markdown文件所在目录下的同名文件夹。）'
-    att_dir_path_button_tip_label = tk.Label(
-        frame, text=att_dir_path_button_tip_label_text, bg="#ced6e0", justify="left", wraplength=500, foreground="#282c34", font=("Microsoft YaHei", 8, "italic"))
-    att_dir_path_button_tip_label.pack(pady=5)
+    att_dirpath_title_label = tk.Label(entry1_frame, text="设置附件目录", font=("Microsoft YaHei", 9))
+    att_dirpath_title_label.pack(side=tk.LEFT, padx=10)
+    entry_box = tk.Entry(entry1_frame, textvariable=att_dirpath_var, width=30, font=("Microsoft YaHei", 9))
+    entry_box.pack(side=tk.LEFT)
+    select_att_dirpath_btn = tk.Button(entry1_frame, text="选择", font=("Microsoft YaHei", 9), command=lambda: buttonHandle("select_att_dirpath", att_dirpath_var=att_dirpath_var))
+    select_att_dirpath_btn.pack(side=tk.LEFT)
+    reset_att_dirpath_btn = tk.Button(entry1_frame, text="重置", font=("Microsoft YaHei", 9), command=lambda: buttonHandle("reset", att_dirpath_var=att_dirpath_var))
+    reset_att_dirpath_btn.pack(side=tk.LEFT, padx=5)
+    label_tip = f'附件目录说明：\n\n（1）对于绝对路径：可通过“选择”按钮选择附件目录。\n（2）对于相对路径：可设置："./"、"{default_att_dirpath}"、"{default_att_dirpath}/xxx/xxx（如：{default_att_dirpath}/assets）" 等相对路径。（其中“./”表示markdown文件所在目录；“{default_att_dirpath}” 表示markdown文件所在目录下的同名文件夹。）'
+    att_dirpath_tip_label = tk.Label(frame, text=label_tip, bg="#ced6e0", justify="left", wraplength=500, foreground="#282c34", font=("Microsoft YaHei", 8, "italic"))
+    att_dirpath_tip_label.pack(pady=5)
 
     switch = tk.Checkbutton(frame, text="清理所有附件（默认只清理图片）", variable=is_clean_all_att_var, width=40, height=5, onvalue=True, offvalue=False, bd=0)
     switch.pack()
-    # label2 = tk.Label(frame, text="清理所有附件（默认只清理图片）", fg="#101014")
-    # label2.pack(side=tk.LEFT)
 
     # 创建标签
-    label = tk.Label(frame, text="请选择清理或还原", fg="#101014", font=("Microsoft YaHei", 12, "bold"))
+    clean_or_restore_label = tk.Label(frame, text="请选择清理或还原", fg="#101014", font=("Microsoft YaHei", 12, "bold"))
     # 创建按钮
-    clean_button = tk.Button(frame, text="清理",  width=10,  command=lambda: buttonHandle("clean", is_clean_all_att_var=is_clean_all_att_var, att_dirpath_var=att_dirpath_var))
-    restore_button = tk.Button(frame, text="还原", width=10,  command=lambda: buttonHandle("restore"))
+    clean_btn = tk.Button(frame, text="清理",  width=10,  command=lambda: buttonHandle("clean", is_clean_all_att_var=is_clean_all_att_var, att_dirpath_var=att_dirpath_var))
+    restore_btn = tk.Button(frame, text="还原", width=10,  command=lambda: buttonHandle("restore"))
     # quit_button = tk.Button(frame, text="关闭", width=10,  command=lambda: buttonHandle("quit"))
     # 将按钮、标签添加到窗口中
-    label.pack(pady=10)
-    clean_button.pack(pady=5)
-    restore_button.pack(pady=5)
+    clean_or_restore_label.pack(pady=10)
+    clean_btn.pack(pady=5)
+    restore_btn.pack(pady=5)
     # quit_button.pack(pady=5)
     # 获取屏幕的宽度和高度
     frame_width = frame.winfo_reqwidth()
